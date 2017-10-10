@@ -21,6 +21,7 @@ def main():
     file.close()
     median_obj.randomized_median(data, len(data) % 2 == 0)
     print("Compare Value: ",statistics.median(data))
+    print("Made a change! 4:33PM 10/10/2017")
     
 
 if __name__ == "__main__":
