@@ -1,5 +1,7 @@
 import random
 import math
+
+
 class Median:
     def __init__(self):
         """
@@ -7,28 +9,28 @@ class Median:
         """
         pass
 
-    def get_median(self,data):
+    def get_median(self, data):
         l = len(data) - 1
         if len(data) % 2 != 0:
-           return data[int(l/2)]
+            return data[int(l/2)]
         return (data[int(l/2)] + data[int((l/2) + 1)])/2
 
-    '''
-        part 2 
-    '''
-    def randomized_median(self,data, even=False):
+    """
+        part 2
+    """
+    def randomized_median(self, data, even=False):
         n_index = len(data) - 1
-        middle_index_1 =  int((len(data) + 1)/2)#odd size array
-        middle_index_2 = math.ceil((len(data) + 1)/2)
+        middle_index_1 = int((len(data) + 1) / 2)  # odd size array
+        middle_index_2 = math.ceil((len(data) + 1) / 2)
 
         if even:
-            median_num_1 = self.quick_select(data,0,n_index,middle_index_1)
-            median_num_2 = self.quick_select(data,0,n_index,middle_index_2)
+            median_num_1 = self.quick_select(data, 0, n_index, middle_index_1)
+            median_num_2 = self.quick_select(data, 0, n_index, middle_index_2)
             median = (median_num_1 + median_num_2)/2
         else:
-            median = self.quick_select(data,0,n_index,middle_index_1)
+            median = self.quick_select(data, 0, n_index, middle_index_1)
         print("Median number: ", median)
-    
+
     def partition(self, data, l, r):
         pivot_num = data[r]
         i = l - 1
@@ -42,52 +44,48 @@ class Median:
             j += 1
         temp = data[i+1]
         data[i+1] = data[r]
-        data[r]  = temp
+        data[r] = temp
         new_pivot_point = i + 1
         return new_pivot_point
 
-    def randomize_partition(self,data,l,r):
-        pivot = random.randint(l,r)
+    def randomize_partition(self, data, l, r):
+        pivot = random.randint(l, r)
         temp = data[pivot]
         data[pivot] = data[r]
         data[r] = temp
-        return self.partition(data,l,r)
+        return self.partition(data, l, r)
 
-        
-    def quick_select(self,data,l,r,i):
+    def quick_select(self, data, l, r, i):
         if l == r:
-           return data[l]
-        pivot = self.randomize_partition(data,l,r)
-        
+            return data[l]
+        pivot = self.randomize_partition(data, l, r)
+
         k = pivot - l + 1
         if i == k:
             return data[pivot]
         elif i < k:
-            return self.quick_select(data,l,pivot-1,i)
+            return self.quick_select(data, l, pivot - 1, i)
         else:
-            return self.quick_select(data,pivot+1,r,i-k)
-        
+            return self.quick_select(data, pivot + 1, r, i - k)
 
-    '''
+    """
         part 1
-    '''
-
-    def sort_based(self,data):
+    """
+    def sort_based(self, data):
         n = len(data) - 1
-        self.merge_sort(data,0,n)
-        median = self.get_median(data)
-        
+        self.merge_sort(data, 0, n)
+        self.get_median(data)
 
-    def merge(self,data,l,m,r):
+    def merge(self, data, l, m, r):
         temp_size_1 = m - l + 1
         temp_size_2 = r-m
 
         L = [0] * temp_size_1
         R = [0] * temp_size_2
 
-        for i in range(0,temp_size_1):
-            L[i] = data[l+i]
-        for j in range(0,temp_size_2):
+        for i in range(0, temp_size_1):
+            L[i] = data[l + i]
+        for j in range(0, temp_size_2):
             R[j] = data[m + 1 + j]
 
         i = 0
@@ -113,10 +111,9 @@ class Median:
             j = j + 1
             k = k + 1
 
-    def merge_sort(self,data,l,r):
+    def merge_sort(self, data, l, r):
         if l < r:
-            m = int((l+(r-1))/2)
-            self.merge_sort(data,l,m)
-            self.merge_sort(data,m+1,r)
-            self.merge(data,l,m,r)
-        
+            m = int((l + (r - 1)) / 2)
+            self.merge_sort(data, l, m)
+            self.merge_sort(data, m + 1, r)
+            self.merge(data, l, m, r)
