@@ -117,3 +117,31 @@ class Median:
             self.merge_sort(data, l, m)
             self.merge_sort(data, m + 1, r)
             self.merge(data, l, m, r)
+
+    """
+        part 3
+    """
+    def fast_median(self, array, k=5):
+        """Determines the median of an array
+
+        Finds the median of an array by splitting up into n/k chunks.
+        The median of each chunk is found and the median of medians is found.
+
+        It is unknown what the best value for k is. This class
+        expects the usage of k as 3, 5, and 7.
+        Both 5 and 7 are very efficient and better than 3.
+
+        Arguments:
+            array {[1...N]} -- Array for which to find the median
+            k {int} -- The number of elements per chunk (default: 5)
+        """
+        if (len(array) <= k):
+            # TODO: Sort and return median
+            pass
+
+        median_of_subsets = []
+        for i in range(0, len(array), k):
+            median_of_subsets.append(self.fast_median(array[i: i + k], k))
+
+        # TODO: Sort and return median
+        return
