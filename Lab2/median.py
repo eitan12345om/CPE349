@@ -138,18 +138,35 @@ class Median:
         It is unknown what the best value for k is. This class
         expects the usage of k as 3, 5, and 7.
         Both 5 and 7 are very efficient and better than 3.
+        NOTE: DOES NOT WORK FOR EVEN VALUES OF K
 
         Arguments:
             array {[1...N]} -- Array for which to find the median
             k {int} -- The number of elements per chunk (default: 5)
         """
         if (len(array) <= k):
-            # TODO: Sort and return median
-            pass
+            self.merge_sort(array, 0, len(array) - 1)
+            print(array)
+            return array[int((k - 1) / 2)]
 
-        median_of_subsets = []
-        for i in range(0, len(array), k):
-            median_of_subsets.append(self.fast_median(array[i: i + k], k))
+        medians_of_subsets = [self.fast_median(array[i: i + k], k)
+                              for i in range(0, len(array), k)]
 
-        # TODO: Sort and return median
-        return
+        sorted_medians = self.merge_sort(medians_of_subsets, 0, len(array) - 1)
+        pivot = sorted_medians[len(sorted_medians) - 1]
+
+        low = []
+        high = []
+        for i in array:
+            if i < pivot:
+                low.append(i)
+            elif i > pivot:
+                high.append(i)
+
+        middle_index = math.floor(len(array) / 2)
+        if middle_index < len(low):
+            return self.fast_median(low, k)
+        elif middle_index > len(high):
+            return self.fast_median(high, k)
+        else:
+            return pivot
