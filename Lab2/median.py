@@ -146,14 +146,15 @@ class Median:
         """
         if (len(array) <= k):
             self.merge_sort(array, 0, len(array) - 1)
-            print(array)
-            return array[int((k - 1) / 2)]
+            return array[int((len(array) - 1) / 2)]
 
         medians_of_subsets = [self.fast_median(array[i: i + k], k)
                               for i in range(0, len(array), k)]
 
-        sorted_medians = self.merge_sort(medians_of_subsets, 0, len(array) - 1)
-        pivot = sorted_medians[len(sorted_medians) - 1]
+        # FIXME: This line doesn't work
+        sorted_medians = self.merge_sort(medians_of_subsets, 0,
+                                         len(medians_of_subsets) - 1)
+        pivot = sorted_medians[math.floor(len(sorted_medians) / 2)]
 
         low = []
         high = []
