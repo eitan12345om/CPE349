@@ -19,9 +19,9 @@ def main():
     with open("test.csv", "w") as output:
         csvWriter = csv.writer(output)
         csvWriter.writerow(['Size',
-                           'Iterative', 'Iterative Standard Deviation',
-                           'Recursive', 'Recursive Standard Deviation',
-                           'Strassens', 'Strassens Standard Deviation'])
+                            'Iterative', 'Iterative Standard Deviation',
+                            'Recursive', 'Recursive Standard Deviation',
+                            'Strassens', 'Strassens Standard Deviation'])
 
         for size in sizeList:
             iterative_time = []
@@ -57,7 +57,7 @@ def main():
             iterative_deviation = np.std(np.array(iterative_time))
             recursive_deviation = np.std(np.array(recursive_time))
             strassens_deviation = np.std(np.array(strassens_time))
-            
+
             csvWriter.writerow([size,
                                iterative_average_time, iterative_deviation,
                                recursive_average_time, recursive_deviation,
