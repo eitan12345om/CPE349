@@ -10,10 +10,18 @@ class Median:
         pass
 
     def get_median(self, data):
+        """Gets the median of the data
+
+        Arguments:
+            data {[1...N]} -- The array for which to find the median
+
+        Returns:
+            int -- The median of the array
+        """
         l = len(data) - 1
         if len(data) % 2 != 0:
-            return data[int(l/2)]
-        return (data[int(l/2)] + data[int((l/2) + 1)])/2
+            return data[int(l / 2)]
+        return (data[int(l / 2)] + data[int((l / 2) + 1)]) / 2
 
     """
         part 2
@@ -26,7 +34,7 @@ class Median:
         if even:
             median_num_1 = self.quick_select(data, 0, n_index, middle_index_1)
             median_num_2 = self.quick_select(data, 0, n_index, middle_index_2)
-            median = (median_num_1 + median_num_2)/2
+            median = (median_num_1 + median_num_2) / 2
         else:
             median = self.quick_select(data, 0, n_index, middle_index_1)
         print("Median number: ", median)
