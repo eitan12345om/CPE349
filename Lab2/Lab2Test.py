@@ -36,7 +36,7 @@ def main():
 
                 start = time()
                 # Is this right?
-                median_obj.get_median(A)
+                median_obj.sort_based(A)
                 end = time()
                 sort_based_time.append(end - start)
 
