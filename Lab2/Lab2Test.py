@@ -32,8 +32,7 @@ def main():
             fast5_time = []
             fast7_time = []
             for i in range(repetitions):
-                A = [[randrange(100) for j in range(int(size))]
-                     for k in range(int(size))]
+                A = [randrange(100) for j in range(int(size))]
 
                 start = time()
                 # Is this right?
