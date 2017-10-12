@@ -152,8 +152,7 @@ class Median:
                               for i in range(0, len(array), k)]
 
         # FIXME: This line doesn't work
-        sorted_medians = self.merge_sort(medians_of_subsets, 0,
-                                         len(medians_of_subsets) - 1)
+        sorted_medians = sorted(medians_of_subsets)
         pivot = sorted_medians[math.floor(len(sorted_medians) / 2)]
 
         low = []
