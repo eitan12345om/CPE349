@@ -90,7 +90,7 @@ class GraphBuilder():
             graph {dictionary} -- adjacency list of words
         """
         with open(fname, "w") as outFile:
-            json.dump(graph, outFile, indent=4)
+            json.dump(graph, outFile, indent=4, sort_keys=True)
 
 
 def _check_usage(args):
