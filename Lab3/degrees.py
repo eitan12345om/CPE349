@@ -7,20 +7,17 @@ class Degree():
     def __init__(self):
         pass
 
-    def __calculate_frequency(self, graph, directed=False):
+    def __calculate_frequency(self, graph, numEdges):
         """Calculates the frequency of vertices in a graph
 
         Arguments:
-            graph {dict} -- The graph
-
-        Keyword Arguments:
-            directed {bool} -- Whether the graph is directed (default: {False})
+            graph {dict} -- The graph for which to calculate the frequency
+            numEdges {int} -- The number of edges in the graph
 
         Returns:
             dict -- Frequency distribution of the graph's vertices
         """
         frequencies = {}
-        numEdges = self.__count_edges(graph, directed)
 
         for key in graph:
             total = 0
@@ -75,6 +72,28 @@ class Degree():
             outdegree {str} -- Output file for outdegree histogram
             (default: {"outdegree_histogram.json"})
         """
+        with open(fname, "r") as inFile:
+            graph = json.load(inFile)
+
+        numEdges = self.__count_edges(graph, directed=True)
+        out_frequencies = self.__calculate_frequency(graph, numEdges)
+        self.__write_to_JSON(out_frequencies, outdegree)
+
+        in_frequencies = {}
+        for key in self.undirected_graph:
+            total = 0
+            for word in self.undirected_graph[key]:
+                total += self.undirected_graph[key][word]
+
+            if key == '$$':
+                print(total)
+            if out_frequencies.get(key, None) is not None:
+                total -= next(iter(out_frequencies[key]))
+            if key == '$$':
+                print(total)
+            in_frequencies[key] = {total: total / (self.totalEdges - numEdges)}
+
+        self.__write_to_JSON(in_frequencies, indegree)
 
     def undirected_vertex_distribution(self, fname,
                                        outName="undirected_histogram.json"):
@@ -88,9 +107,12 @@ class Degree():
             (default: {"undirected_histogram.json"})
         """
         with open(fname, "r") as inFile:
-            graph = json.load(inFile)
+            self.undirected_graph = json.load(inFile)
 
-        frequencies = self.__calculate_frequency(graph, directed=False)
+        self.totalEdges = self.__count_edges(self.undirected_graph,
+                                             directed=False)
+        frequencies = self.__calculate_frequency(self.undirected_graph,
+                                                 self.totalEdges)
         self.__write_to_JSON(frequencies, outName)
 
 
@@ -109,6 +131,7 @@ def main():
 
     degree = Degree()
     degree.undirected_vertex_distribution(sys.argv[1])
+    degree.directed_vertex_distribution(sys.argv[2])
 
 
 if __name__ == '__main__':

@@ -45,7 +45,7 @@ class Connected():
                 maxDegreeList = [word for word in sorted(graph[key])
                                  if graph[key][word] == maxDegree]
                 if numMaxDegree > 20:
-                    maxDegreeList[:20]
+                    maxDegreeList = maxDegreeList[:20]
                 outFile.write("\n%-28s | %4d | %4d : %-4d | " %
                               (key, numComponents, maxDegree, numMaxDegree))
                 outFile.write("%s " % maxDegreeList)
