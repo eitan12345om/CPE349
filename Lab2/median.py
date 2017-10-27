@@ -153,7 +153,7 @@ class Median:
 
         # FIXME: This line doesn't work
         sorted_medians = sorted(medians_of_subsets)
-        pivot = sorted_medians[math.floor(len(sorted_medians) / 2)]
+        pivot = sorted_medians[int(math.floor(len(sorted_medians) / 2))]
 
         low = []
         high = []
